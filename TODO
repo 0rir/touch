@@ -1,0 +1,6 @@
+
+Exceptions instead of simple die.
+
+Implement NO-FOLLOW for symlinks.
+
+Pod is malformed.
