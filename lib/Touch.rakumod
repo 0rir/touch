@@ -1,6 +1,6 @@
 use v6.c;
 # vim: ft=perl6 expandtab sw=4
-unit module Touch:ver<0.0.1>;
+unit module Touch:ver<0.5.0>;
 use NativeCall;
 use NativeHelpers::CStruct;
 
