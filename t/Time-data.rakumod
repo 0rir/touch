@@ -8,6 +8,9 @@ my Rat $machine-takes = 0.01;
 # seconds to touch then get stat back
 our $LAG is export = %*ENV<LAG> // $machine-takes;
 
+our constant $file is export
+    = $?FILE.IO.parent(2).add('resources/testfile').path;
+
 our @test is export = flat (
 0,
 0.4,
