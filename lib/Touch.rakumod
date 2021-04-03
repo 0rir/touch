@@ -17,13 +17,13 @@ Touch - set file modify and access times
 
 use Touch;
 
-touch( $filename, :NO-FOLLOW);
-touch( $filename, $access, $modify, :NO-FOLLOW);
-touch( $filename, :$access!, :$modify!, :NO-FOLLOW )
-touch( $filename, :$access!, :ONLY!, :NO-FOLLOW);
-touch( $filename, :$access!, :NO-FOLLOW);
-touch( $filename, :$modify!, :ONLY!, :NO-FOLLOW);
-touch( $filename, :$modify!, :NO-FOLLOW);
+touch( $filename );
+touch( $filename, $access, $modify );
+touch( $filename, :$access!, :$modify! );
+touch( $filename, :$access!, :ONLY! );
+touch( $filename, :$access! );
+touch( $filename, :$modify!, :ONLY! );
+touch( $filename, :$modify! );
 
 =end code
 
@@ -39,8 +39,11 @@ in Raku.  Instants being passed to C<touch> must be from
 When an access or modify argument is absent, its default is now.
 Use the :ONLY flag to leave the absent timestamp unchanged.
 All given arguments must be defined.
-NO-FOLLOWing of symlinks is not yet implemented.
-All of these die on failure.
+
+Symlinks are always followed. Acting on symlinks directly is not supported.
+This is because Raku always follows symlinks when reading file times.
+
+All of these die on failure. Exceptions NYI.
 
 =head1 CAVEATS
 
