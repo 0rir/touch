@@ -8,9 +8,8 @@ use Time-data;
 use NativeCall;
 use NativeHelpers::CStruct;
 
-my constant $file = $?FILE.IO.parent(2).add('resources/testfile').path;
 
-diag "\$LAG for tests is set at $LAG seconds. Adjust as an environment var.";
+diag "Test lag is $LAG seconds. Environment var \$LAG can be adjusted.";
 
 constant $control = Instant.from-posix(-11121);
 

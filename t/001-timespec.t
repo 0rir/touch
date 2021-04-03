@@ -8,9 +8,7 @@ use Time-data;
 
 # Test creation of Timespec objects.
 
-my constant $file = $?FILE.IO.parent(2).add('resources/testfile').path;
-
-plan 3 * @test.elems + 4;
+plan 3 * @test.elems + 2;
 
 for @test -> %data {
     my $ts = Touch::Timespec.from-instant(%data<instant>);
@@ -24,7 +22,4 @@ is $now-spec.sec, 0, 'Timespec default now has .sec == 0.';
 is $now-spec.nsec, ((1 +< 30) - 1),
         'Timespec default now has .nsec == UTIME_NOW.';
 
-my  $ignore-spec = Touch::Timespec.ignore-me;
-is $ignore-spec.sec, 0, 'Timespec to ignore has .sec == 0.';
-is $ignore-spec.nsec, ((1 +< 30) - 2),
-        'Timespec to ignore has .nsec == UTIME_OMIT.';
+done-testing;

@@ -110,13 +110,6 @@ class Timespec is repr('CStruct') {
     method Instant {
         Instant.from-posix($!sec + ($!nsec / 10⁹));
     }
-    method ignore-me {
-        return self.bless(:sec(0), :nsec($UTIME_OMIT));
-    }
-    submethod TWEAK {
-        die "Error posix timestamp out of range: $!sec."
-        unless $MIN-POSIX <= $!sec <= $MAX-POSIX;
-    }
 }
 
 our $OMIT is export = Timespec.new(:sec(0), :nsec($UTIME_OMIT));
