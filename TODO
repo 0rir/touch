@@ -1,6 +1,6 @@
 
+Check ERRNO before dying.
+
 Exceptions instead of simple die.
 
-Pod is malformed.
 
-grep -r "DateTime.*Instant.*to-posix"; DateTime itself does to-posix.

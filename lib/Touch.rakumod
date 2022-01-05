@@ -4,94 +4,24 @@ unit module Touch:ver<0.5.0>;
 use NativeCall;
 use NativeHelpers::CStruct;
 
+our $MIN-POSIX = -10 ** 9;      # 1938-04-24T22:13:20Z
+our $MAX-POSIX = 10 ** 10;      # 2286-11-20T17:46:40Z
 
-=begin pod
-
-=head1 NAME
-
-Touch - set file modify and access times
-
-=head1 SYNOPSIS
-
-=begin code :lang<raku>
-
-use Touch;
-
-touch( $filename );
-touch( $filename, $access, $modify );
-touch( $filename, :$access!, :$modify! );
-touch( $filename, :$access!, :ONLY! );
-touch( $filename, :$access! );
-touch( $filename, :$modify!, :ONLY! );
-touch( $filename, :$modify! );
-
-=end code
-
-=head1 DESCRIPTION
-
-Touch is a wrapping of C<C>s utimensat call. It allows the
-setting of file access and modify times.
-
-The Instant type is used to express all time values seen
-in Raku.  Instants being passed to C<touch> must be from
--29719-04-05T22:13:20Z  to +318857-05-20T17:46:40Z inclusive.
-
-When an access or modify argument is absent, its default is now.
-Use the :ONLY flag to leave the absent timestamp unchanged.
-All given arguments must be defined.
-
-Symlinks are always followed. Acting on symlinks directly is not supported.
-This is because Raku always follows symlinks when reading file times.
-
-All of these die on failure. Exceptions NYI.
-
-=head1 CAVEATS
-
-The calling interface is not to be considered stable yet.  It is
-supposed to be accomodating and easy.  Feedback is welcome. 
-
-So far only tested on 64 bit linux.
-
-If tests fail, you may increase the lag allowance for writing
-and reading back a timestamp.   Set $LAG in the environment.
-0.01 second is the default.
-
-One host, with a Intel 2400Mhz processor and SSDs, lags around
-0.006 seconds.
-
-Distant time values are inaccurate-ish.  Precision is lost.
-Since there is a unlikely situation where being off by five minutes
-could be inconvenient, the range of allowed values is constrained.
-
-=head1 AUTHOR
-
-Robert Ransbottom
-
-=head1 SEE ALSO
-
-joy / the clouds / ride the zephyr / warm they smile / die crying
-
-=head1 COPYRIGHT AND LICENSE
-
-This library is free software; you can redistribute it and/or modify it
-under the Artistic License 2.0.
-Copyright 2021 rir.
-
-=end pod
-
-
-my Int $MIN-POSIX = -10 ** 12;
-# -29719-04-05T22:13:20Z   12
-my Int $MAX-POSIX = 10 ** 13;
-# +318857-05-20T17:46:40Z  13
 my int32 $UTIME_NOW = ((1 +< 30) - 1);
 my int32 $UTIME_OMIT = ((1 +< 30) - 2);
-my constant NANO = 1 * 10 ** -9;
+
+my constant NANO = 10 ** -9;
 
 class Timespec is repr('CStruct') {
     has long  $.sec;
     has long  $.nsec;
 
+    sub MIN-POSIX() is export {
+        $MIN-POSIX
+    }
+    sub MAX-POSIX() is export {
+        $MAX-POSIX
+    }
     multi method from-instant (Instant:D $instant) {
         my $posixtime = $instant.to-posix[0];
         die "Error posix timestamp out of range."
@@ -106,7 +36,7 @@ class Timespec is repr('CStruct') {
         return self.bless(:$sec, :nsec($nsec.Int));
     }
 
-    multi method from-instant (Instant:U ) {
+    multi method from-instant (Instant:U) {
         return self.bless(:sec(0), :nsec($UTIME_NOW));
     }
 
@@ -135,33 +65,29 @@ sub utimensat (int32:D,
 
 
 # implicitly set both now
-multi sub touch(Str:D $fname, Bool :$NO-FOLLOW ) is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
+multi sub touch(Str:D $fname) is export {
     die "Native utimensat failed."
     if 0 ≠ utimensat($AT_FDCWD, $fname, $NOW-NOW, 0);
 }
 
 # explicitly set both
-multi sub touch(Str:D $fname,
-                Instant:D $acc, Instant:D $mod, Bool :$NO-FOLLOW ) is export {
+multi sub touch(Str:D $fname, Instant:D $acc, Instant:D $mod) is export {
     my $times = LinearArray[Timespec].new(2);
     $times[0] = Timespec.from-instant($acc);
     $times[1] = Timespec.from-instant($mod);
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
     die "Native utimensat failed."
     if 0 ≠ utimensat($AT_FDCWD, $fname, $times.base, 0);
 }
 
 # explicitly set both with named args
-multi sub touch(Str:D $fname, Instant:D :$access!, Instant:D :$modify!,
-                Bool :$NO-FOLLOW) is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
-    return touch($fname, $access, $modify); # XXX splat
+multi sub touch(Str:D $fname, Instant:D :$access!, Instant:D :$modify!)
+        is export {
+    return touch($fname, $access, $modify);
+    # XXX splat
 }
 # set access only
-multi sub touch(Str:D $fname, Instant:D :$access!, Bool:D :ONLY($b)!,
-                Bool :$NO-FOLLOW ) is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
+multi sub touch(Str:D $fname, Instant:D :$access!, Bool:D :ONLY($b)!)
+        is export {
     die "Do not call touch with :ONLY false, omit :ONLY perhaps." unless $b;
     my $times = LinearArray[Timespec].new(2);
     $times[0] = Timespec.from-instant($access);
@@ -171,9 +97,8 @@ multi sub touch(Str:D $fname, Instant:D :$access!, Bool:D :ONLY($b)!,
 }
 
 # set modify only
-multi sub touch(Str:D $fname, Instant:D :$modify!, Bool:D :ONLY($b)!,
-                Bool :$NO-FOLLOW) is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
+multi sub touch(Str:D $fname, Instant:D :$modify!, Bool:D :ONLY($b)!)
+        is export {
     die "Do not call touch with :ONLY false, omit :ONLY instead." unless $b;
     my $times = LinearArray[Timespec].new(2);
     $times[0] = $OMIT;
@@ -183,9 +108,7 @@ multi sub touch(Str:D $fname, Instant:D :$modify!, Bool:D :ONLY($b)!,
 }
 
 # set access explicitly, modify to now
-multi sub touch(Str:D $fname, Instant:D :$access!, Bool :$NO-FOLLOW)
-        is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
+multi sub touch(Str:D $fname, Instant:D :$access!) is export {
     my $flag = 0;
     my $times = LinearArray[Timespec].new(2);
     $times[0] = Timespec.from-instant($access);
@@ -195,9 +118,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!, Bool :$NO-FOLLOW)
 }
 
 # set modify explicitly, access to now
-multi sub touch(Str:D $fname, Instant:D :$modify!, Bool :$NO-FOLLOW)
-        is export {
-    die "Don't set optional :NO-FOLLOW;  not yet implemented." if $NO-FOLLOW;
+multi sub touch(Str:D $fname, Instant:D :$modify!) is export {
     my $flag = 0;
     my $times = LinearArray[Timespec].new(2);
     $times[0] = $NOW;

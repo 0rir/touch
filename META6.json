@@ -6,7 +6,7 @@
   "authors": [
     "rir"
   ],
-  "auth": "github:rakool",
+  "auth": "github:0rir",
   "depends": [
     "NativeHelpers::Cstruct",
     "Test::META",

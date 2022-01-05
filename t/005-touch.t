@@ -13,10 +13,10 @@ diag "Test lag is $LAG seconds. Environment var \$LAG can be adjusted.";
 
 constant $control = Instant.from-posix(-11121);
 
-plan 2 + 2 + 2 + 12 * @test.elems + 18;
+plan 2 + 2 + 2 + 12 * @test.elems;
 
-my $init-mod = $file.IO.modified;
-my $init-acc = $file.IO.accessed;
+my $initial-modify = $file.IO.modified;
+my $initial-access = $file.IO.accessed;
 
 my ($acc, $mod, $now);
 
@@ -27,17 +27,16 @@ $mod = $file.IO.modified;
 is-approx $acc, $now, $LAG, 'touch( $f), access NOW';
 is-approx $mod, $now, $LAG, 'touch( $f), modify NOW';
 
-
 for @test -> $t {
     touch($file, $t<instant>, $t<instant>);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
     is-approx $acc, $t<expected>, $LAG,
-            "touch( \$f, \$a, \$m) access: $t<given>";
+            "touch( \$f, \$a, \$m) access: $t<instant>.DateTime.Str()";
     is-approx $mod, $t<expected>, $LAG,
-            "touch( \$f, \$a, \$m) modify: $t<given>";
-}
+            "touch( \$f, \$a, \$m) modify: $t<instant>.DateTime.Str()";
 
+}
 
 for @test -> $t {
     touch($file, :access($t<instant>), :modify($t<instant>));
@@ -94,48 +93,7 @@ for @test -> $t {
             "touch( \$f, :\$modify, :ONLY) modify: $t<given>";
 }
 
-
-dies-ok { touch($file, :NO-FOLLOW( True)) }, "No-follow NYI";
-lives-ok { touch($file, :NO-FOLLOW( False)) }, "No-follow NYI";
-lives-ok { touch($file, :NO-FOLLOW( Bool)) }, "No-follow NYI";
-
-dies-ok { touch($file, :access($control), :modify($control),
-        :NO-FOLLOW(True))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control), :modify($control),
-        :NO-FOLLOW(False))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control), :modify($control),
-        :NO-FOLLOW(Bool))}, "No-follow NYI";;
-
-dies-ok { touch($file, :access($control),
-        :NO-FOLLOW(True))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control),
-        :NO-FOLLOW(False))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control),
-        :NO-FOLLOW(Bool))}, "No-follow NYI";;
-
-dies-ok { touch($file, :modify($control),
-        :NO-FOLLOW(True))}, "No-follow NYI";;
-lives-ok { touch($file, :modify($control),
-        :NO-FOLLOW(False))}, "No-follow NYI";;
-lives-ok { touch($file, :modify($control),
-        :NO-FOLLOW(Bool))}, "No-follow NYI";;
-
-dies-ok { touch($file, :access($control), :ONLY,
-        :NO-FOLLOW(True))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control), :ONLY,
-        :NO-FOLLOW(False))}, "No-follow NYI";;
-lives-ok { touch($file, :access($control), :ONLY,
-        :NO-FOLLOW(Bool))}, "No-follow NYI";;
-
-dies-ok { touch($file, :modify($control), :ONLY,
-        :NO-FOLLOW(True))}, "No-follow NYI";;
-lives-ok { touch($file, :modify($control), :ONLY,
-        :NO-FOLLOW(False))}, "No-follow NYI";;
-lives-ok { touch($file, :modify($control), :ONLY,
-        :NO-FOLLOW(Bool))}, "No-follow NYI";;
-
-
-touch $file, $init-acc, $init-mod;
+touch $file, $initial-access, $initial-modify;
 
 done-testing;
 
