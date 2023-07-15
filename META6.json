@@ -1,17 +1,17 @@
 {
   "name": "Touch",
   "description": "Change file timestamps for 64-bit linuxes w/ utimensat(2)",
-  "version": "0.6.2",
+  "version": "v0.6.3",
   "raku": "6",
   "authors": [ "rir" ],
   "auth": "github:0rir",
   "depends": [
-    "NativeHelpers::Cstruct",
-    "Test::META",
-    "NativeHelpers::Blob"
+    "NativeHelpers::Cstruct"
   ],
   "build-depends": [],
-  "test-depends": [],
+  "test-depends": [
+    "Test::META"
+  ],
   "provides": [
     "Touch", "lib/Touch.rakumod",
     "Timespec", "lib/Touch.rakumod",
@@ -33,5 +33,5 @@
     "accessed",
     "posix"
   ],
-  "source-url": ""
+  "source-url": "https://github.com/0rir/touch"
 }

@@ -11,9 +11,8 @@ our $TESTLAG is export = %*ENV<TESTLAG> // $machine-takes;
 our constant $file is export
 = $?FILE.IO.cleanup.parent(2).add('resources/testfile').path;
 
-my $min = -10⁹;
-# from Touch
-my $max = 10¹⁰;
+my $min = -10⁹;     # dupe magic
+my $max = 10¹⁰;     # dupe magic
 
 our @test is export =
         {

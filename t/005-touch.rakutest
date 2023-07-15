@@ -72,13 +72,13 @@ touch($file, $control, $control);
 is $file.IO.accessed, $control, "Setup control access time.";
 is $file.IO.modified, $control, "Setup control modify time.";
 
-for @test -> $t {       # XXX :ONLY is deprecated
-    touch($file, access => $t<instant>, :ONLY);
+for @test -> $t {
+    touch($file, access => $t<instant>, :only);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
     is-approx $acc, $t<expected>, $TESTLAG,
-            "touch( \$f, :\$access, :ONLY) access: $t<given>";
-    is $mod, $control, "touch( \$f, :\$access, :ONLY) modify: $t<given>";
+            "touch( \$f, :\$access, :only) access: $t<given>";
+    is $mod, $control, "touch( \$f, :\$access, :only) modify: $t<given>";
 }
 
 for @test -> $t {
@@ -95,12 +95,12 @@ is $file.IO.accessed, $control, "Setup";
 is $file.IO.modified, $control, "Setup";
 
 for @test -> $t {
-    touch($file, :modify($t<instant>), :ONLY);
+    touch($file, :modify($t<instant>), :only);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
-    is $acc, $control, "touch( \$f, :\$modify, :ONLY) access: $t<given>";
+    is $acc, $control, "touch( \$f, :\$modify, :only) access: $t<given>";
     is-approx $mod, $t<expected>, $TESTLAG,
-            "touch( \$f, :\$modify, :ONLY) modify: $t<given>";
+            "touch( \$f, :\$modify, :only) modify: $t<given>";
 }
 
 for @test -> $t {

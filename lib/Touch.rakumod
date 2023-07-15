@@ -114,7 +114,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!,
 multi sub touch(Str:D $fname, Instant:D :$access!,
         Bool:D :$ONLY! where * == True) is export {
     DEPRECATED(
-        'touch( use :only not :ONLY)','0.5.0','0.8.0', :what( &?ROUTINE.name)
+        'touch( use :only not :ONLY)','0.0.5','0.0.8', :what( &?ROUTINE.name)
     );
     touch( $fname, :$access, :only);
 }
@@ -123,7 +123,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!,
 multi sub touch(Str:D $fname, Instant:D :$modify!,
         Bool:D :$ONLY! where * == True) is export {
     DEPRECATED(
-        'touch( use :only not :ONLY)','0.5.0','0.8.0', :what( &?ROUTINE.name)
+        'touch( use :only not :ONLY)','0.0.5','0.0.8', :what( &?ROUTINE.name)
     );
     touch( $fname, :$modify, :only);
 }
