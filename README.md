@@ -10,9 +10,9 @@ use Touch;
 touch( $filename );                     # update both to now
 touch( $filename, $access, $modify );   # update both
 touch( $filename, :$access!, :$modify! ); # update both
-touch( $filename, :$access!, :ONLY! );  # update access only
+touch( $filename, :$access!, :only! );  # update access only
 touch( $filename, :$access! );          # update access, set mtime to now
-touch( $filename, :$modify!, :ONLY! );  # update modify only
+touch( $filename, :$modify!, :only! );  # update modify only
 touch( $filename, :$modify! );          # update atime, set atime to now
 
 
@@ -28,28 +28,24 @@ times in the years from 1939 to 2285 inclusive are valid.
 The formal limits are in $MIN-POSIX and $MAX-POSIX as
 posix time values.
 
-When an access or modify argument is absent, its default is no
-w.
-Use the :ONLY flag to leave the absent timestamp unchanged.
-All given arguments must be defined.
+When an access or modify argument is absent, its default is now.
+Use the :only flag to leave the absent timestamp unchanged.
+All given arguments must be defined.  :ONLY is deprecated.
+Exceptions have been added.
 
-Symlinks are always followed. Acting on symlinks directly is n
-ot supported.  This mirrors Raku's behavior when when reading file
+Symlinks are always followed. Acting on symlinks directly is not
+supported.  This mirrors Raku's behavior when when reading file
 times.
-
-All of these die on failure. Exceptions are NYI.
 
 CAVEATS
 
 Alpha code.  Run the tests.  If tests fail, you may increase the
-lag allowance for writing and reading back a timestamp.   Set $LAG
+lag allowance for writing and reading back a timestamp.   Set $TESTLAG
 in the environment.  0.01 second is the default.
 
-The Timespec code may be moved to a separate module.
-
-The calling interface is not to be considered stable yet.  There
-are no plans to change.  It is supposed to be accomodating and easy.
-Feedback is welcome. 
+The calling interface is not to be considered stableyet.  There
+are no plans to change.  Feedback is welcome, It is supposed to be
+accomodating and easy.
 
 AUTHOR
 
@@ -61,8 +57,9 @@ joy / the clouds / ride the zephyr / warm they smile / die crying
 
 COPYRIGHT AND LICENSE
 
+Copyright 2021-2023 Robert Ransbottom.
+
 This library is free software; you can redistribute it and/or modify it
 under the Artistic License 2.0.
-Copyright 2021 rir.
 
 

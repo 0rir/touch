@@ -98,7 +98,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!, Instant:D :$modify!)
 
 # set access only
 multi sub touch(Str:D $fname, Instant:D :$access!,
-        Bool:D :$ONLY! where * == True) is export {
+        Bool:D :$only! where * == True) is export {
     my $times = LinearArray[Timespec].new(2);
     $times[0] = Timespec.from-instant($access);
     $times[1] = $OMIT;
@@ -107,10 +107,25 @@ multi sub touch(Str:D $fname, Instant:D :$access!,
         X::Touch::Native.new: :call('utimensat'), :err($err)
     }
 }
+multi sub touch(Str:D $fname, Instant:D :$access!,
+        Bool:D :$ONLY! where * == True) is export {
+    DEPRECATED(
+        'touch( use :only not :ONLY)','0.0.5','0.0.6', :what( &?ROUTINE.name)
+    );
+    touch( $fname, :$access, :only);
+}
 
 # set modify only
 multi sub touch(Str:D $fname, Instant:D :$modify!,
-        Bool:D :$ONLY! where * == True)
+        Bool:D :$ONLY! where * == True) is export {
+    DEPRECATED(
+        'touch( use :only not :ONLY)','0.0.5','0.0.6', :what( &?ROUTINE.name)
+    );
+    touch( $fname, :$modify, :only);
+}
+
+multi sub touch(Str:D $fname, Instant:D :$modify!,
+        Bool:D :$only! where * == True)
         is export {
     my $times = LinearArray[Timespec].new(2);
     $times[0] = $OMIT;

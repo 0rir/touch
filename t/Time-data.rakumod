@@ -6,7 +6,7 @@ use Test;
 
 my Rat $machine-takes = 0.01;
 # seconds to touch then get stat back
-our $LAG is export = %*ENV<LAG> // $machine-takes;
+our $TESTLAG is export = %*ENV<TESTLAG> // $machine-takes;
 
 our constant $file is export
 = $?FILE.IO.cleanup.parent(2).add('resources/testfile').path;
