@@ -9,7 +9,7 @@ my Rat $machine-takes = 0.01;
 our $LAG is export = %*ENV<LAG> // $machine-takes;
 
 our constant $file is export
-= $?FILE.IO.parent(2).add('resources/testfile').path;
+= $?FILE.IO.cleanup.parent(2).add('resources/testfile').path;
 
 my $min = -10⁹;
 # from Touch

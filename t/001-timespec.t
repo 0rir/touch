@@ -1,8 +1,8 @@
 use v6.c;
 # vim: ft=perl6 expandtab sw=4
 use Test;
-use lib $?FILE.IO.parent(2).add('lib');
-use lib $?FILE.IO.parent;
+use lib $?FILE.IO.cleanup.parent(2).add('lib');
+use lib $?FILE.IO.cleanup.parent;
 use Touch;
 use Time-data;
 

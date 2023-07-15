@@ -1,15 +1,15 @@
 use v6.c;
 # vim: ft=perl6 expandtab sw=4
 use Test;
-use lib $?FILE.IO.parent(2).add('lib');
-use lib $?FILE.IO.parent(1);
+use lib $?FILE.IO.cleanup.parent(2).add('lib');
+use lib $?FILE.IO.cleanup.parent(1);
 use Touch;
 use Time-data;
 use NativeCall;
 use NativeHelpers::CStruct;
 
 
-diag "Test lag is $LAG seconds. Environment var \$LAG can be adjusted.";
+diag "Test lag allowance is $LAG seconds. Environment \$LAG can be adjusted.";
 
 constant $control = Instant.from-posix(-11121);
 

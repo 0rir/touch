@@ -1,11 +1,9 @@
 {
   "name": "Touch",
-  "description": "Utime/Utimes/Utimensat wrappers via Raku Instants",
+  "description": "Change file timestamps for 64-bit linuxes w/ utimensat(2)",
   "version": "0.5.0",
-  "perl": "6.c",
-  "authors": [
-    "rir"
-  ],
+  "perl": "6",
+  "authors": [ "rir" ],
   "auth": "github:0rir",
   "depends": [
     "NativeHelpers::Cstruct",
@@ -15,14 +13,18 @@
   "build-depends": [],
   "test-depends": [],
   "provides": {
-    "Touch": "lib/Touch.rakumod"
+    "Touch": "lib/Touch.rakumod",
+    "Timespec": "lib/Touch.rakumod",
+    "X::Touch::Out-of-range": "lib/Touch.rakumod",
+    "X::Touch::Native": "lib/Touch.rakumod",
   },
   "resources": [],
   "license": "Artistic-2.0",
   "tags": [
-    "filetime",
-    "setfile",
     "touch",
+    "filetime",
+    "timestamp",
+    "setfile",
     "timespec",
     "utimensat",
     "utimes",

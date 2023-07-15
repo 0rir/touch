@@ -16,90 +16,10 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="JSON::Class:ver&lt;0.0.5+&gt;" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Class:ver&lt;0.0.5+&gt;!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="META6" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:META6!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="URI" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:URI!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="JSON::Name" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Name!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="License::SPDX" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:License::SPDX!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="JSON::Class:ver&lt;0.0.14+&gt;" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Class:ver&lt;0.0.14+&gt;!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="Test" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:Test!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="Test::META" type="perl6">
         <CLASSES />
         <SOURCES>
           <root url="raku://957539159:Test::META!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="JSON::Unmarshal:ver&lt;0.08+&gt;" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Unmarshal:ver&lt;0.08+&gt;!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="JSON::Marshal:ver&lt;0.0.18+&gt;" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Marshal:ver&lt;0.0.18+&gt;!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="JSON::Fast" type="perl6">
-        <CLASSES />
-        <SOURCES>
-          <root url="raku://957539159:JSON::Fast!/" />
         </SOURCES>
       </library>
     </orderEntry>
