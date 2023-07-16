@@ -1,7 +1,7 @@
 {
   "name": "Touch",
   "description": "Change file timestamps for 64-bit linuxes w/ utimensat(2)",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "raku": "6",
   "authors": [ "rir" ],
   "auth": "github:0rir",

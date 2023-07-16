@@ -7,14 +7,18 @@ use NativeHelpers::CStruct;
 constant $MIN-POSIX = -10⁹;      # 1938-04-24T22:13:20Z
 constant $MAX-POSIX =  10¹⁰;     # 2286-11-20T17:46:40Z
 
-constant VALID-POSIX = $MIN-POSIX^..^$MAX-POSIX;
+constant VALID-POSIX = $MIN-POSIX..$MAX-POSIX;
 
 my int32 $UTIME_NOW  = ((1 +< 30) - 1);
 my int32 $UTIME_OMIT = ((1 +< 30) - 2);
 
-constant DOM-ERR = "Posix time not between $MIN-POSIX and $MAX-POSIX.";
 
-class X::Touch::Out-of-range is Exception { method message { DOM-ERR } }
+class X::Touch::Out-of-range is Exception {
+    has Rat $.value;
+    method message {
+            "Posix time $.value not between $MIN-POSIX and $MAX-POSIX.";
+    }
+}
 
 class X::Touch::Native is Exception {
     has Str $.call;
@@ -34,7 +38,7 @@ class Timespec is repr('CStruct') {
 
         my $posixtime = $instant.to-posix[0];
         unless $posixtime ~~ VALID-POSIX {
-            X::Touch::Out-of-range.new;
+            X::Touch::Out-of-range.new( :value($posixtime)).throw;
         }
         my Int $sec = $posixtime.round;
         my $nsec = ($posixtime - $sec).round(10⁻⁹);
@@ -75,7 +79,7 @@ sub utimensat (int32:D,
 multi sub touch(Str:D $fname) is export {
     my $err = utimensat($AT_FDCWD, $fname, $BOTH-NOW, 0);
     if 0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err)
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 
@@ -86,7 +90,7 @@ multi sub touch(Str:D $fname, Instant:D $acc, Instant:D $mod) is export {
     $times[1] = Timespec.from-instant($mod);
     my $err = utimensat($AT_FDCWD, $fname, $times.base, 0);
     if 0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err)
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 
@@ -104,13 +108,13 @@ multi sub touch(Str:D $fname, Instant:D :$access!,
     $times[1] = $OMIT;
     my $err = utimensat($AT_FDCWD, $fname, $times.base, 0);
     if 0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err)
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 multi sub touch(Str:D $fname, Instant:D :$access!,
         Bool:D :$ONLY! where * == True) is export {
     DEPRECATED(
-        'touch( use :only not :ONLY)','0.0.5','0.0.6', :what( &?ROUTINE.name)
+        'touch( use :only not :ONLY)','0.5.0','0.8.0', :what( &?ROUTINE.name)
     );
     touch( $fname, :$access, :only);
 }
@@ -119,7 +123,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!,
 multi sub touch(Str:D $fname, Instant:D :$modify!,
         Bool:D :$ONLY! where * == True) is export {
     DEPRECATED(
-        'touch( use :only not :ONLY)','0.0.5','0.0.6', :what( &?ROUTINE.name)
+        'touch( use :only not :ONLY)','0.5.0','0.8.0', :what( &?ROUTINE.name)
     );
     touch( $fname, :$modify, :only);
 }
@@ -132,7 +136,7 @@ multi sub touch(Str:D $fname, Instant:D :$modify!,
     $times[1] = Timespec.from-instant($modify);
     my $err = utimensat($AT_FDCWD, $fname, $times.base, 0);
     if  0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err)
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 
@@ -144,7 +148,7 @@ multi sub touch(Str:D $fname, Instant:D :$access!) is export {
     $times[1] = $USE-NOW;
     my $err = utimensat($AT_FDCWD, $fname, $times.base, $flag);
     if 0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err)
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 
@@ -156,7 +160,7 @@ multi sub touch(Str:D $fname, Instant:D :$modify!) is export {
     $times[1] = Timespec.from-instant($modify);
     my $err = utimensat($AT_FDCWD, $fname, $times.base, $flag);
     if 0 ≠ $err {
-        X::Touch::Native.new: :call('utimensat'), :err($err);
+        X::Touch::Native.new( :call('utimensat'), :err($err)).throw;
     }
 }
 
