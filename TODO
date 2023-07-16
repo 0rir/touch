@@ -1,6 +1,2 @@
-
-Check ERRNO before dying.
-
-Exceptions instead of simple die.
-
+Get rid of magic for time limits.
 

@@ -1,0 +1,44 @@
+#!/usr/bin/env raku
+use v6;
+# vim: ft=perl6 expandtab sw=4
+use Test;
+use lib $?FILE.IO.cleanup.parent(2).add('lib');
+use lib $?FILE.IO.cleanup.parent(1);
+use Touch;
+use Time-data;
+use NativeCall;
+use NativeHelpers::CStruct;
+
+    ###### Test failing utimensat.
+
+sub mock-utimensat( int32 $ret = 0 -->int32) { $ret }
+
+sub mock-touch( Str $name = 'utimensat', $cret = 0-->Nil) {
+    my $err = mock-utimensat( $cret);
+    if 0 ≠ $err { X::Touch::Native.new( :call($name), :err($err)).throw;
+    }
+}
+
+plan 11;
+
+my $max = Instant.from-posix: MAX-POSIX;
+my $min = Instant.from-posix: MIN-POSIX;
+my $now = now;
+
+lives-ok { touch( $file, $max,   $min)   }, 'live with min and max time';
+lives-ok { touch( $file, $max,   $now)   }, 'live with min and 0   mtime';
+lives-ok { touch( $file, $now,   $min)   }, 'live with 0   and max atime';
+
+dies-ok  { touch( $file, $max+1, $now)   }, 'die with max+1 atime';
+dies-ok  { touch( $file, $now,   $max+1) }, 'die with max+1 mtime';
+dies-ok  { touch( $file, $max+1, $max+1) }, 'die with both max+1';
+
+dies-ok  { touch( $file, $now,   $min-1) }, 'die with min-1 mtime';
+dies-ok  { touch( $file, $min-1, $now)   }, 'die with min-1 atime';
+dies-ok  { touch( $file, $min-1, $min-1) }, 'die with both min-1';
+
+lives-ok { mock-touch( ) }, 'live with 0 return from utimensat';
+dies-ok { mock-touch( 'fail-utimensat', 1) }, 'die with -1 from utimensat';
+
+done-testing;
+
