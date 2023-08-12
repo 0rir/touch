@@ -4,7 +4,7 @@
   "version": "v0.6.3",
   "raku": "6",
   "authors": [ "rir" ],
-  "auth": "github:0rir",
+  "auth": "zef:rir",
   "depends": [
     "NativeHelpers::Cstruct"
   ],
