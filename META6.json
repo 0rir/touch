@@ -12,7 +12,6 @@
   "license": "Artistic-2.0",
   "name": "Touch",
   "raku": "6.c",
-  "version": "0.7.0"
   "provides": {
     "Touch": "lib/Touch.rakumod"
   },
@@ -25,11 +24,12 @@
     "timestamp",
     "setfile",
     "modified",
-    "accessed",
-  ],
-  "test-depends": [
+    "accessed"
   ],
   "license": "Artistic-2.0",
-  "source-url": "https://github.com/0rir/touch"
+  "source-url": "https://github.com/0rir/touch",
+  "test-depends": [
+  ],
+  "version": "0.7.0"
 }
 
