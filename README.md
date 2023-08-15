@@ -15,8 +15,6 @@ touch( $filename, :$access! );          # update access, set mtime to now
 touch( $filename, :$modify!, :only! );  # update modify only
 touch( $filename, :$modify! );          # update atime, set atime to now
 
-
-
 DESCRIPTION
 
 Touch is a wrapping of C<C>s utimensat call. It allows the
@@ -43,7 +41,7 @@ Alpha code.  Run the tests.  If tests fail, you may increase the
 lag allowance for writing and reading back a timestamp.   Set $TESTLAG
 in the environment.  0.01 second is the default.
 
-The calling interface is not to be considered stableyet.  There
+The calling interface is not to be considered stable yet.  There
 are no plans to change.  Feedback is welcome, It is supposed to be
 accomodating and easy.
 

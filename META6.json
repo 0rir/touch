@@ -1,37 +1,35 @@
 {
-  "name": "Touch",
-  "description": "Change file timestamps for 64-bit linuxes w/ utimensat(2)",
-  "version": "v0.6.3",
-  "raku": "6",
-  "authors": [ "rir" ],
   "auth": "zef:rir",
+  "authors": [
+    "Robert Ransbottom"
+  ],
+  "build-depends": [
+  ],
   "depends": [
-    "NativeHelpers::Cstruct"
+      "NativeHelpers::Cstruct"
   ],
-  "build-depends": [],
-  "test-depends": [
-    "Test::META"
-  ],
-  "provides": [
-    "Touch", "lib/Touch.rakumod",
-    "Timespec", "lib/Touch.rakumod",
-    "X::Touch::Out-of-range", "lib/Touch.rakumod",
-    "X::Touch::Native", "lib/Touch.rakumod"
-  ],
-  "resources": [ "testfile" ],
+  "description": "Change file timestamps",
   "license": "Artistic-2.0",
+  "name": "Touch",
+  "raku": "6.c",
+  "version": "0.0.7"
+  "provides": {
+    "Touch": "lib/Touch.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "https://github.com/0rir/touch.git",
   "tags": [
     "touch",
-    "filetime",
+    "filetimes",
     "timestamp",
     "setfile",
-    "timespec",
-    "utimensat",
-    "utimes",
-    "utime",
     "modified",
     "accessed",
-    "posix"
   ],
+  "test-depends": [
+  ],
+  "license": "Artistic-2.0",
   "source-url": "https://github.com/0rir/touch"
 }
+
