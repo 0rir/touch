@@ -12,7 +12,7 @@
   "license": "Artistic-2.0",
   "name": "Touch",
   "raku": "6.c",
-  "version": "0.0.7"
+  "version": "0.7.0"
   "provides": {
     "Touch": "lib/Touch.rakumod"
   },
