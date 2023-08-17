@@ -4,18 +4,24 @@
     "Robert Ransbottom"
   ],
   "build-depends": [
+     "Test"
   ],
   "depends": [
-      "NativeHelpers::Cstruct"
+      "NativeCall",
+      "NativeHelpers::CStruct"
   ],
   "description": "Change file timestamps",
   "license": "Artistic-2.0",
   "name": "Touch",
-  "raku": "6.c",
+  "perl": "6.c",
   "provides": {
-    "Touch": "lib/Touch.rakumod"
+     "Touch": "lib/Touch.rakumod",
+     "Timespec": "lib/Touch.rakumod",
+     "X::Touch::Native": "lib/Touch.rakumod",
+     "X::Touch::Out-of-range": "lib/Touch.rakumod"
   },
   "resources": [
+      "testfile"
   ],
   "source-url": "https://github.com/0rir/touch.git",
   "tags": [
@@ -29,6 +35,7 @@
   "license": "Artistic-2.0",
   "source-url": "https://github.com/0rir/touch",
   "test-depends": [
+      "Test::META"
   ],
   "version": "0.7.0"
 }
