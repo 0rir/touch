@@ -4,7 +4,6 @@
     "Robert Ransbottom"
   ],
   "build-depends": [
-     "Test"
   ],
   "depends": [
       "NativeCall",
