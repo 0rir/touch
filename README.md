@@ -29,7 +29,9 @@ posix time values.
 When an access or modify argument is absent, its default is now.
 Use the :only flag to leave the absent timestamp unchanged.
 All given arguments must be defined.  :ONLY is deprecated.
-Exceptions have been added.
+
+Exceptions that may be thrown: C<X::Touch::Out-of-range> and
+C<X::Touch::Native>.
 
 Symlinks are always followed. Acting on symlinks directly is not
 supported.  This mirrors Raku's behavior when when reading file
