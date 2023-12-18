@@ -6,37 +6,35 @@
   "build-depends": [
   ],
   "depends": [
-      "NativeCall",
-      "NativeHelpers::CStruct"
+    "NativeHelpers::CStruct",
   ],
   "description": "Change file timestamps",
   "license": "Artistic-2.0",
+  "meta-version": "1",
   "name": "Touch",
   "perl": "6.c",
   "provides": {
-     "Touch": "lib/Touch.rakumod",
-     "Timespec": "lib/Touch.rakumod",
-     "X::Touch::Native": "lib/Touch.rakumod",
-     "X::Touch::Out-of-range": "lib/Touch.rakumod"
+    "Timespec": "lib/Touch.rakumod",
+    "Touch": "lib/Touch.rakumod",
+    "X::Touch::Native": "lib/Touch.rakumod",
+    "X::Touch::Out-of-range": "lib/Touch.rakumod"
   },
   "resources": [
-      "testfile"
+    "testfile"
   ],
-  "source-url": "https://github.com/0rir/touch.git",
+  "source-url": "https://github.com/0rir/touch",
   "tags": [
     "touch",
     "filetimes",
     "timestamp",
     "setfile",
     "modified",
-    "accessed"
+    "accessed",
+    "atime",
+    "mtime"
   ],
-  "license": "Artistic-2.0",
-  "source-url": "https://github.com/0rir/touch",
   "test-depends": [
-      "Test::META"
+    "Test::META"
   ],
-  "version": "0.7.0",
-  "meta-version": "1"
+  "version": "0.7.0"
 }
-
