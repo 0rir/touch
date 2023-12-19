@@ -9,13 +9,13 @@ SYNOPSIS
 
     use Touch;
 
-    touch( $filename );                     # update both to now
-    touch( $filename, $access, $modify );   # update both
-    touch( $filename, :$access!, :$modify! ); # update both
-    touch( $filename, :$access!, :only! );  # update access only
-    touch( $filename, :$access! );          # update access, set mtime to now
-    touch( $filename, :$modify!, :only! );  # update modify only
-    touch( $filename, :$modify! );          # update atime, set atime to now
+    touch( $filename);                       # set atime and mtime to now
+    touch( $filename, $access, $modify);     # set both
+    touch( $filename, :$access!, :$modify!); # set both w/ named args
+    touch( $filename, :$access!, :only!);    # set access only
+    touch( $filename, :$access!);            # set access, set mtime to now
+    touch( $filename, :$modify!, :only!);    # set modify only
+    touch( $filename, :$modify!);            # set mtime, set atime to now
 
 DESCRIPTION
 ===========
