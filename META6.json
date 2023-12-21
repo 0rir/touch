@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "NativeHelpers::CStruct",
+    "NativeHelpers::CStruct"
   ],
   "description": "Change file timestamps",
   "license": "Artistic-2.0",
@@ -22,7 +22,7 @@
   "resources": [
     "testfile"
   ],
-  "source-url": "https://github.com/0rir/touch",
+  "source-url": "https://github.com/0rir/touch.git",
   "tags": [
     "touch",
     "filetimes",
@@ -36,5 +36,5 @@
   "test-depends": [
     "Test::META"
   ],
-  "version": "0.7.1"
+  "version": "0.7.2"
 }
