@@ -1,4 +1,4 @@
-use v6;
+use v6.c;
 # vim: ft=perl6 expandtab sw=4
 unit module Touch:ver<0.7.0>;
 use NativeCall;
@@ -70,9 +70,9 @@ my $BOTH-NOW = {
 
 my int32 $AT_FDCWD = -100;
 
-sub utimensat (int32:D,
-               str:D,
-               Timespec:D,
+sub utimensat (int32:D,                 # int dirfd
+               str:D,                   # const char *pathname
+               Timespec:D,              # const struct timespec times[2]
                int32:D --> int32) is native {*}
 
 # implicitly set both to now
