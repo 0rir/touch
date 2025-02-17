@@ -8,6 +8,9 @@ use Time-data;
 use NativeCall;
 use NativeHelpers::CStruct;
 
+=begin comment
+    This exercises the rest of the multis of 'touch()'.
+=end comment
 
 diag "Test lag allowance is $TESTLAG seconds. Environment \$TESTLAG can be adjusted.";
 

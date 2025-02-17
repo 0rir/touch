@@ -8,6 +8,10 @@ use Time-data;
 use NativeCall;
 use NativeHelpers::CStruct;
 
+=begin comment
+    This tests the accuracy of touch using its
+        "touch($file, :modify($t<instant>), :only)" multi.
+=end comment
 
 diag "Test lag allowance is $TESTLAG seconds. Environment \$TESTLAG can be adjusted.";
 
