@@ -1,0 +1,48 @@
+use v6.c;
+# vim: ft=perl6 expandtab sw=4
+use Test;
+use lib $?FILE.IO.cleanup.parent(2).add('lib');
+use lib $?FILE.IO.cleanup.parent;
+use Touch;
+use Time-data;
+use NativeCall;
+use NativeHelpers::CStruct;
+
+
+diag "Test lag allowance is $TESTLAG seconds. Environment \$TESTLAG can be adjusted.";
+
+constant $control = Instant.from-posix(-11121);
+
+plan 2 + 2 + 2 × @test;
+
+my $initial-modify = $file.IO.modified;
+my $initial-access = $file.IO.accessed;
+
+my ($acc, $mod, $now);
+
+{
+    touch($file);
+    $now = now;
+    $acc = $file.IO.accessed;
+    $mod = $file.IO.modified;
+    is-approx $acc, $now, $TESTLAG, 'touch( $f), access NOW';
+    is-approx $mod, $now, $TESTLAG, 'touch( $f), modify NOW';
+
+    touch($file, $control, $control);
+    is $file.IO.accessed, $control, "Setup control access time.";
+    is $file.IO.modified, $control, "Setup control modify time.";
+}
+
+for @test -> $t {
+    touch($file, :modify($t<instant>), :only);
+    $acc = $file.IO.accessed;
+    $mod = $file.IO.modified;
+    is $acc, $control, "touch( \$f, :\$modify, :only) access: $control";
+    is-approx $mod, $t<expected>, $TESTLAG,
+            "touch( \$f, :\$modify, :only) modify: $t<given>";
+}
+
+touch $file, $initial-access, $initial-modify;
+
+done-testing;
+
