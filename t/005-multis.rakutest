@@ -12,30 +12,36 @@ use NativeHelpers::CStruct;
     This exercises the rest of the multis of 'touch()'.
 =end comment
 
-diag "Test lag allowance is $TESTLAG seconds. Environment \$TESTLAG can be adjusted.";
+diag "Test lag allowance is $TESTLAG seconds. "
+   ~ "Environment \$TESTLAG can be adjusted.";
 
 constant $control = Instant.from-posix(-11121);
 
-plan 2 + 2 + 2 + 14 × @test;
+plan 9;
 
 my $initial-modify = $file.IO.modified;
 my $initial-access = $file.IO.accessed;
 
 my ($acc, $mod, $now);
 
-touch($file);
 $now = now;
+touch($file, $now, $now);
 $acc = $file.IO.accessed;
 $mod = $file.IO.modified;
 
-is-approx $acc, $now, $TESTLAG, 'touch( $f), access NOW';
-is-approx $mod, $now, $TESTLAG, 'touch( $f), modify NOW';
+subtest "Set up ", {
+    plan 4; 
+ is-approx $acc, $now, $TESTLAG, 'touch( $f), access NOW';
+ is-approx $mod, $now, $TESTLAG, 'touch( $f), modify NOW';
 
-touch($file, $control, $control);
-is $file.IO.accessed, $control, "Setup control access time.";
-is $file.IO.modified, $control, "Setup control modify time.";
+ touch($file, $control, $control);
+ is $file.IO.accessed, $control, "Setup control access time.";
+ is $file.IO.modified, $control, "Setup control modify time.";
+}
 
-for @test -> $t {
+subtest "touch( $file, \$t,  \$t)", {
+    plan 2 ×  +@test;
+ for @test -> $t {
     touch($file, $t<instant>, $t<instant>);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
@@ -43,11 +49,12 @@ for @test -> $t {
             "touch( \$f, \$a, \$m) access: $t<instant>.DateTime.Str()";
     is-approx $mod, $t<expected>, $TESTLAG,
             "touch( \$f, \$a, \$m) modify: $t<instant>.DateTime.Str()";
+ }
 }
-
 touch($file, $control, $control);
-
-for @test -> $t {
+subtest "touch( $file, :\$atime  :\$mtime)", {
+    plan 2 × +@test;
+ for @test -> $t {
     touch($file, :access($t<instant>), :modify($t<instant>));
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
@@ -55,36 +62,44 @@ for @test -> $t {
             "touch( \$f, \$a, \$m) access: $t<given>";
     is-approx $mod, $t<expected>, $TESTLAG,
             "touch( \$f, \$a, \$m) modify: $t<given>";
+ }
 }
 
 touch($file, $control, $control);
 
-for @test -> $t {
+subtest "touch( $file, :\$atime) implicit now = mtime", {
+    plan 2 × @test;
+ for @test -> $t {
     touch($file, :access($t<instant>));
     $now = now;
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
     is-approx $acc, $t<expected>, $TESTLAG,
             "touch( \$f, \$a) access: $t<given>";
-    is-approx $mod, $now, $TESTLAG, "touch( \$f, \$a) modify: $now";
-
-}
+    is-approx $mod, $now, $TESTLAG, "touch( \$f, \$a) modify: $t<given>";
+ }
+} 
 
 touch($file, $control, $control);
 
-for @test -> $t {
+subtest "touch( $file, :\$mtime) and implicit now = atime", {
+    plan 2 × @test;
+ for @test -> $t {
     touch($file, :modify($t<instant>));
     $now = now;
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
-    is-approx $acc, $now, $TESTLAG, "touch( \$f, \$a) access: $now";
+    is-approx $acc, $now, $TESTLAG, "touch( \$f, \$a) access: $now"; # XXX
     is-approx $mod, $t<expected>, $TESTLAG,
             "touch( \$f, \$m) modify: $t<given>";
+ }
 }
 
 touch($file, $control, $control);
 
-for @test -> $t {
+subtest "touch( $file, :\$atime :only)", {
+    plan 4 × @test;
+ for @test -> $t {
     touch($file, access => $t<instant>, :only);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
@@ -102,17 +117,21 @@ for @test -> $t {
     is-approx $acc, $t<expected>, $TESTLAG,
             "touch( \$f, :\$access, :only) access: $t<given>";
     is $mod, $control, "touch( \$f, :\$access, :only) modify: $control";
+ }
 }
 
 touch($file, $control, $control);
 
-for @test -> $t {
+subtest "touch( $file, :\$mtime :only)", {
+    plan 2 × @test;
+ for @test -> $t {
     touch($file, :modify($t<instant>), :only);
     $acc = $file.IO.accessed;
     $mod = $file.IO.modified;
-    is $acc, $control, "touch( \$f, :\$modify, :only) access: $control";
+    is $acc, $control, "touch( \$f, :\$modify, :only) access: $control"; #XXX
     is-approx $mod, $t<expected>, $TESTLAG,
             "touch( \$f, :\$modify, :only) modify: $t<given>";
+ }
 }
 
 touch $file, $initial-access, $initial-modify;

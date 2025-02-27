@@ -20,8 +20,8 @@ constant $MAX-POSIX =  10¹⁰;     # 2286-11-20T17:46:40Z
 
 constant VALID-POSIX = $MIN-POSIX..$MAX-POSIX;
 
-my int32 $UTIME_NOW  = ((1 +< 30) - 1);
-my int32 $UTIME_OMIT = ((1 +< 30) - 2);
+my long $UTIME_NOW  = ((1 +< 30) - 1);
+my long $UTIME_OMIT = ((1 +< 30) - 2);
 
 
 class X::Touch::Out-of-range is Exception {
@@ -72,9 +72,10 @@ class Timespec is repr('CStruct') {
             given $!nsec {
                 when $UTIME_NOW  { 'TimeSpec=NOW'  }
                 when $UTIME_OMIT { 'TimeSpec=OMIT' }
-                default          { "TimeSpec=$!sec+$!nsec" }
+                default          { "TimeSpec.new($!sec+$!nsec)" }
             }
         }
+
     }
 }
 
