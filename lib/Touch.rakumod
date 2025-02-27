@@ -55,7 +55,18 @@ class Timespec is repr('CStruct') {
     }
 
     method Instant { Instant.from-posix($!sec + $!nsec ÷ 10⁹) }
+
+    method gist( -->Str) {
+        return do {
+            given $!nsec {
+                when $UTIME_NOW  { 'TimeSpec=NOW'  }
+                when $UTIME_OMIT { 'TimeSpec=OMIT' }
+                default          { "TimeSpec=$!sec+$!nsec" }
+            }
+        }
+    }
 }
+
 
 our $OMIT    is export = Timespec.new(:sec(0), :nsec($UTIME_OMIT));
 our $USE-NOW is export = Timespec.new(:sec(0), :nsec($UTIME_NOW));
