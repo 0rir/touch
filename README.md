@@ -1,5 +1,9 @@
+NOTE
+====
 
-NAME        BROKEN in Rakudo/MoarVM 2024.03  (known to work in 2022.12)
+BROKEN in Rakudo/MoarVM 2023.11 and later.
+
+NAME
 ====
 
 Touch -- set file modified and/or accessed time
