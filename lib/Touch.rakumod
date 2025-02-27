@@ -4,6 +4,17 @@ unit module Touch:ver<0.7.5>;
 use NativeCall;
 use NativeHelpers::CStruct;
 
+# TODO    make unneccessary and/or verify truth of this:
+#if $*VM.name ne 'moar' {
+#    warn "Touch module only tested on MoarVM. Feedback please";
+#} else {
+#    if      $*RAKU.compiler.version gt v2023.10
+#        and $*RAKU.compiler.version lt v2025.02
+#    {
+#    die 'Touch broken in Rakudo MoarVM v2023.11 to v2025.02'
+#    }
+#}
+
 constant $MIN-POSIX = -10⁹;      # 1938-04-24T22:13:20Z
 constant $MAX-POSIX =  10¹⁰;     # 2286-11-20T17:46:40Z
 
