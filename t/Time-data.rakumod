@@ -14,13 +14,15 @@ our constant $file is export
 my $min = -10⁹;     # dupe magic
 my $max = 10¹⁰;     # dupe magic
 
+
 our @test is export =
         {   given => $min,
             instant => Instant.from-posix($min),
             expected => Instant.from-posix($min),
             sec => $min, nsec => 0, posix => $min,
         },
-        {   given => $max,
+        {
+            given => $max -37,
             instant => Instant.from-posix($max),
             expected => Instant.from-posix($max),
             sec => $max, nsec => 0, posix => $max,
@@ -71,5 +73,17 @@ our @test is export =
             expected => Instant.from-posix(200.000_000_06),
             sec => 200, nsec => 60, posix => 200.000_000_06
         },
-        ;
+        {
+            given => 117.44444,
+            instant => Instant.from-posix(117.44444),
+            expected => Instant.from-posix(117.44444),
+            sec => 117, nsec => 444440000, posix => 117.44444
+        },
+        {
+            given => 30.000_000_7,
+            instant => Instant.from-posix(30.000_000_7),
+            expected => Instant.from-posix(30.000_000_7),
+            sec => 30, nsec => 700, posix => 30.000_000_7
+        },
+;
 
