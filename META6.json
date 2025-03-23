@@ -21,7 +21,6 @@
     "X::Touch::Out-of-range": "lib/Touch.rakumod"
   },
   "resources": [ "testfile" ],
-  "support": {},
   "tags": [ "touch", "filetimes", "timestamp",
             "setfile", "modified", "accessed"
   ],
