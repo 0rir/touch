@@ -24,7 +24,6 @@
   "authors": [
     "Robert Ransbottom"
   ],
-  "source-url": "https://github.com/0rir/touch.git",
   "tags": [
     "touch",
     "filetimes",
@@ -32,5 +31,7 @@
     "setfile",
     "modified",
     "accessed"
-  ]
+  ],
+  "source-url": "https://github.com/0rir/touch.git",
+  "repo-type": "git"
 }
