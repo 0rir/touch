@@ -1,5 +1,6 @@
 {
   "name": "Touch",
+  "version": "v0.7.5",
   "meta-version": "1",
   "license": "Artistic-2.0",
   "description": "Change file timestamps",
@@ -32,5 +33,4 @@
     "modified",
     "accessed"
   ],
-  "version": "0.7.5"
 }
