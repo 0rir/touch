@@ -1,0 +1,34 @@
+use v6.c;
+# vim: ft=perl6 expandtab sw=4
+use lib $?FILE.IO.cleanup.parent(2).add('lib');
+use Test;
+use Touch;
+
+plan 1;
+
+my $first = Version.new("2023.10"); # First known incompatible Rakudo release.
+my $last  = Version.new("2025.04"); # Last known incompatible Rakudo release.
+
+my $test-desc = 'Rakudo version is compatible';
+my $forced = " (FORCED by user)";
+
+given  $*RAKU.compiler.version {
+    when * < $first {
+        ok True, $test-desc;
+        skip-rest '';
+    }
+     when $first ≤ * ≤  $last {
+        ok False, $test-desc;
+        bail-out "Rakudo from $first to $last are incompatible."
+    }
+    default {
+        if not %*ENV<TRV> {
+            ok False, $test-desc;
+            bail-out "Rakudo may not be compatible after $last\n"
+                ~ "Set environment 'TRV' true to test this Rakudo version.";
+        } else {
+            ok True, $test-desc ~ $forced;
+        }
+    }
+}
+done-testing;
