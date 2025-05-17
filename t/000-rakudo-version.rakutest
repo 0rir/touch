@@ -6,7 +6,7 @@ use Touch;
 
 plan 1;
 
-my $first = Version.new("2023.10"); # First known incompatible Rakudo release.
+my $first = Version.new("2023.11"); # First known incompatible Rakudo release.
 my $last  = Version.new("2025.04"); # Last known incompatible Rakudo release.
 
 my $test-desc = 'Rakudo version is compatible';
