@@ -1,6 +1,6 @@
 {
   "test-depends": [
-    "Test,
+    "Test",
     "Test::META"
   ],
   "build-depends": [
@@ -29,8 +29,6 @@
     "Touch": "lib/Touch.rakumod",
     "X::Touch::Native": "lib/Touch.rakumod",
     "X::Touch::Out-of-range": "lib/Touch.rakumod"
-  },
-  "support": {
   },
   "license": "Artistic-2.0",
   "auth": "zef:rir",
