@@ -1,18 +1,28 @@
 {
-  "name": "Touch",
-  "version": "v0.7.6",
-  "description": "Change file timestamps",
-  "license": "Artistic-2.0",
-  "auth": "zef:rir",
-  "perl": "6.c",
-  "authors": [
-    "Robert Ransbottom"
+  "test-depends": [
+    "Test,
+    "Test::META"
+  ],
+  "build-depends": [
   ],
   "depends": [
+    "NativeCall",
     "NativeHelpers::CStruct"
   ],
-  "test-depends": [
-    "Test::META"
+  "meta-version": "1",
+  "name": "Touch",
+  "description": "Change file timestamps",
+  "source-url": "https://github.com/0rir/touch.git",
+  "version": "0.7.7",
+  "raku": "6.c",
+  "resources": [ "testfile" ],
+  "tags": [ 
+      "touch",
+      "filetimes",
+      "timestamp",
+      "setfile",
+      "modified",
+      "accessed"
   ],
   "provides": {
     "Timespec": "lib/Touch.rakumod",
@@ -20,10 +30,12 @@
     "X::Touch::Native": "lib/Touch.rakumod",
     "X::Touch::Out-of-range": "lib/Touch.rakumod"
   },
-  "resources": [ "testfile" ],
-  "tags": [ "touch", "filetimes", "timestamp",
-            "setfile", "modified", "accessed"
+  "support": {
+  },
+  "license": "Artistic-2.0",
+  "auth": "zef:rir",
+  "authors": [
+    "Robert Ransbottom"
   ],
-  "source-url": "https://github.com/0rir/touch.git",
-  "repo-type": "git"
+  "api": "1.0"
 }
